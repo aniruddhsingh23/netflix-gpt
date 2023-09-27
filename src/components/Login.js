@@ -2,21 +2,19 @@ import React, { useRef, useState } from "react";
 import Header from "./Header";
 import { checkValidData } from "../utils/validate";
 import {
-  getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   updateProfile,
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
-import { useNavigate } from 'react-router-dom';
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
+import { BG_URL, User_Avatar } from "../utils/constants";
 
 const Login = () => {
   const [isSigninForm, setIsSigninForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const fullName = useRef(null);
   const email = useRef(null);
   const password = useRef(null);
@@ -30,8 +28,6 @@ const Login = () => {
     // console.log(message);
 
     if (message) return;
-
-    const authInstance = getAuth();
 
     // can create a user, Sign in/up logic
     if (!isSigninForm) {
@@ -47,7 +43,7 @@ const Login = () => {
           // console.log(user);
           updateProfile(user, {
             displayName: fullName.current.value,
-            photoURL: "https://example.com/jane-q-user/profile.jpg",
+            photoURL: User_Avatar,
           })
             .then(() => {
               const { uid, email, displayName, photoURL } = auth.currentUser;
@@ -59,7 +55,6 @@ const Login = () => {
                   photoURL: photoURL,
                 })
               );
-              navigate('/Browse');
             })
             .catch((error) => {
               setErrorMessage(error.message);
@@ -80,7 +75,6 @@ const Login = () => {
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
-          navigate('/Browse');
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -88,9 +82,6 @@ const Login = () => {
           setErrorMessage(errorCode + "-" + errorMessage);
         });
     }
-
-    // Connect to the database or handle form submission here
-    // ...
   };
 
   const toggleSignInForm = () => {
@@ -102,8 +93,8 @@ const Login = () => {
       <Header />
       <div className="absolute">
         <img
-          className="h-screen object-cover md:h-auto"
-          src={"https://assets.nflxext.com/ffe/siteui/vlv3/f85718e8-fc6d-4954-bca0-f5eaf78e0842/ea44b42b-ba19-4f35-ad27-45090e34a897/IN-en-20230918-popsignuptwoweeks-perspective_alpha_website_small.jpg"}
+          className="w-screen h-screen bg-cover"
+          src={BG_URL}
           alt="background screen"
         />
       </div>
