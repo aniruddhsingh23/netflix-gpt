@@ -1,0 +1,24 @@
+/* MovieList.css */
+
+/* Hide the default scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 0.4rem; /* You can adjust the width as needed */
+    height: 0.4rem; /* You can adjust the height as needed */
+  }
+  
+  /* Track */
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  /* Handle */
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #888; /* You can set the color you prefer */
+    border-radius: 0.2rem;
+  }
+  
+  /* Handle on hover */
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #555; /* You can set the color on hover */
+  }
+  
